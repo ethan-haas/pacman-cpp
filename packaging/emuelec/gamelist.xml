@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+  EmuELEC "ports" gamelist entry for PAC-MAN Reimagined v2.0.
+  install-emuelec.sh merges this into /storage/roms/ports/gamelist.xml
+  (preserves any existing entries via Python merge).
+-->
+<gameList>
+  <game>
+    <path>./pacman-reimagined.sh</path>
+    <name>PAC-MAN Reimagined</name>
+    <sortname>pacman-reimagined</sortname>
+    <desc>Modern PAC-MAN with three modes: Solo, 2P Alternating, and 2P Co-op. Native aarch64 build for Kinhank Super Console X2 Pro running EmuELEC v4.7/4.8. Two controllers required for multiplayer modes.</desc>
+    <image>./images/pacman-reimagined-cover.png</image>
+    <marquee>./images/pacman-reimagined-marquee.png</marquee>
+    <thumbnail>./images/pacman-reimagined-thumb.png</thumbnail>
+    <developer>AgentA</developer>
+    <publisher>Self-published</publisher>
+    <genre>Arcade / Couch Multiplayer</genre>
+    <players>1-2</players>
+    <releasedate>20260518T000000</releasedate>
+    <rating>0.85</rating>
+  </game>
+</gameList>

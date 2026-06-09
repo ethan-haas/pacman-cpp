@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<gameList>
+  <game>
+    <path>./pacmates.sh</path>
+    <name>Pac-Mates Multiplayer</name>
+    <sortname>pacmates-multiplayer</sortname>
+    <desc>Pac-Mates Multiplayer — native C++/SDL2 build for the x2 Pro. Three modes: Solo, 2P Alternating, 2P Co-op. Two controllers required for multiplayer modes. Built fresh for EmuELEC v4.6 on aarch64.</desc>
+    <developer>AgentA</developer>
+    <publisher>Self-published</publisher>
+    <genre>Arcade / Couch Multiplayer</genre>
+    <players>1-2</players>
+    <releasedate>20260518T000000</releasedate>
+    <rating>0.85</rating>
+  </game>
+</gameList>

@@ -1,0 +1,46 @@
+# Cross-build PAC-MAN Reimagined C++ for aarch64 (Cortex-A53, EmuELEC v4.8).
+#
+# Uses Debian bookworm arm64 base under qemu-user-static (requires
+# `docker run --privileged --rm tonistiigi/binfmt --install all` on the
+# host once before building).
+#
+# Build:
+#   docker buildx build --platform=linux/arm64 \
+#     -f packaging/emuelec/Dockerfile.aarch64 \
+#     -t pacman-cpp-arm64-builder .
+#   docker create --name extract pacman-cpp-arm64-builder
+#   docker cp extract:/out/pacman-reimagined-arm64 ./build-arm64/
+#   docker rm extract
+
+FROM --platform=linux/arm64 debian:bookworm-slim AS build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        ninja-build \
+        pkg-config \
+        libsdl2-dev \
+        ca-certificates \
+        && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+COPY CMakeLists.txt /src/
+COPY src /src/src
+COPY include /src/include
+COPY assets /src/assets
+
+RUN cmake -S /src -B /build -G Ninja \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_FLAGS_RELEASE="-O2 -march=armv8-a -mtune=cortex-a53 -DNDEBUG"
+
+RUN cmake --build /build -j
+
+RUN mkdir -p /out \
+    && cp /build/pacman-reimagined /out/pacman-reimagined-arm64 \
+    && aarch64-linux-gnu-strip /out/pacman-reimagined-arm64 \
+    && ls -lh /out/pacman-reimagined-arm64 \
+    && file /out/pacman-reimagined-arm64 || true
+
+# Final stage = just a tiny scratch image holding the binary, easy to docker cp out
+FROM scratch
+COPY --from=build /out/pacman-reimagined-arm64 /pacman-reimagined-arm64
